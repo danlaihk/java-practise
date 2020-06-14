@@ -53,9 +53,8 @@ public class OddsAndEvens {
     }
     private static Map<String, String> start(Scanner con){
         char input;
-        String name,inStr = "", player = "", computer = "";
+        String name,inStr = "", player, computer;
         Map<String, String> pInfo = new HashMap<>();
-
         System.out.println("Let’s play a game called “Odds and Evens”");
         System.out.print("What is your name? ");
         name = con.next();
@@ -68,12 +67,9 @@ public class OddsAndEvens {
         if(inStr.equals("O")){
             player = "odds";
             computer = "evens";
-        }else if(inStr.equals("E")){
+        }else{
             player = "evens";
             computer = "odds";
-        }else{
-            player = "";
-            computer = "";
         }
 
         System.out.println(name+" has picked "+player+"! The computer will be "+computer+".\n");
