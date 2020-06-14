@@ -72,7 +72,7 @@ public class OddsAndEvens {
             computer = "odds";
         }
 
-        System.out.println(name+" has picked "+player+"! The computer will be "+computer+".\n");
+        System.out.println(name+" has picked "+player+"! The computer will be "+computer+".");
         System.out.println("----------------------------------------------------");
 
         pInfo.put("name", name);
