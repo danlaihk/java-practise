@@ -2,6 +2,7 @@ package module3;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.Scanner;
 
 public class Crypto {
@@ -20,8 +21,21 @@ public class Crypto {
         //String encrpyted = caesarify(normalizeText(input), key);
 
         //System.out.println(groupify(encrpyted, key) );
+        String encryptTxt = encryptString(input, key, size);
 
-        System.out.println(encryptString(input, key, size));
+        System.out.println("Encrypted Text: " + encryptTxt);
+
+        System.out.println("Decrypted Text: "+decryptString(encryptTxt, key));
+
+    }
+    public static String decryptString(String encryptedTxt, int key){
+        key = key * -1;
+        String plainTxt;
+        encryptedTxt = encryptedTxt.substring(0, encryptedTxt.length() - 1);
+        encryptedTxt = encryptedTxt.replaceAll("\\s","");
+        plainTxt = caesarify(encryptedTxt, key);
+        return plainTxt;
+
     }
     public static String encryptString(String txt, int shift, int groupSize){
         String out, encrpyted;
@@ -32,7 +46,7 @@ public class Crypto {
     }
     public static String normalizeText(String txt){
         String[] words;
-        String output = "";
+        String output;
         txt = txt.replaceAll( "\\s", "");
 
         //2. Remove any punctuation (. , : ; ’ ” ! ? ( ) )
@@ -43,11 +57,11 @@ public class Crypto {
         return output;
     }
 
-    public static String caesarify(@NotNull String input, int shift){
-        int charIndex = 0;
+    public static String caesarify(String input, int shift){
+        int charIndex;
 
-        int start = (int)'A' ;
-        int end = (int)'Z' ;
+        int start = 'A' ;
+        int end = 'Z' ;
         String result = "";
         char currChar;
 
@@ -57,22 +71,20 @@ public class Crypto {
 
             charIndex = (int)input.charAt(i) + shift;
 
+            //System.out.println(charIndex);
             if(charIndex > end){
                 charIndex = start + (charIndex - end) -1;
+                //System.out.println(charIndex +" = "+start+ " ("+charIndex+" - " +end +") - 1");
             }else if(charIndex < start){
-                charIndex = end - (charIndex - start) -1;
+                charIndex = end + (charIndex - start) + 1;
+                //System.out.println(charIndex +" = "+end+ " ("+charIndex+" - " +start +") + 1");
+
             }
 
-            /*
-            if (shift < 0) {
-                charIndex = (int)input.charAt(i) + shift + 1;
-            } else {
-                charIndex = (int)input.charAt(i) + shift;
-            }*/
 
             currChar = (char) charIndex;
             //result = result + currChar+":"+charIndex+"\n";
-            result = result + currChar;
+            result = result.concat(String.valueOf(currChar));
         }
 
         return result;
@@ -82,9 +94,9 @@ public class Crypto {
         for(int i = 0; i < input.length(); i += num){
 
                 if(i + num < input.length() ){
-                    output = output + input.substring(i, i+ num)+" ";
+                    output = output.concat(input.substring(i, i+ num)).concat(" ") ;
                 }else {
-                    output = output + input.substring(i) + "x";
+                    output = output.concat(input.substring(i) ).concat("x");
                 }
 
 
